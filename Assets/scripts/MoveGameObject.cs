@@ -18,6 +18,7 @@ public class MoveGameObject : MonoBehaviour
     void Update()
     {
         moveGameObject();
+        rotationGameObject();
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -41,6 +42,14 @@ public class MoveGameObject : MonoBehaviour
             float maxDistanceDelta = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, nextPos , maxDistanceDelta);
         }
+    }
+
+    private void rotationGameObject()
+    {
+        Vector3 directionToTarget = points[pointsIndex] - transform.position;
+        Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget);
+        
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotationToTarget, 3f * Time.deltaTime);
     }
 
     private void OnDrawGizmosSelected()
