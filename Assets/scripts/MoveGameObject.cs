@@ -54,14 +54,14 @@ public class MoveGameObject : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.green;
         if (points != null && points.Count > 0)
         {
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 1; i < points.Count; i++)
             {
-                Gizmos.DrawLine(gameObject.transform.position, points[pointsIndex]);
+                Gizmos.DrawLine(points[i - 1],points[i]);
             }
-            Gizmos.DrawLine(gameObject.transform.position, points[pointsIndex]);
+            Gizmos.DrawLine(points[0] ,points[points.Count - 1]);
         }
     }
 }
