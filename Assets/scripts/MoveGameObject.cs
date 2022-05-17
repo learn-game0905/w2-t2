@@ -6,12 +6,22 @@ using UnityEngine;
 public class MoveGameObject : MonoBehaviour
 {
     public List<Vector3> points;
+    private List<GameObject> pointsGo = new List<GameObject>();
     public float speed = 10f;
     private int pointsIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
         gameObject.transform.position = new Vector3(0, 0, 0);
+        if (points.Count > 0)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                GameObject go1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                go1.transform.position = points[i];
+                pointsGo.Add(go1);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -19,6 +29,10 @@ public class MoveGameObject : MonoBehaviour
     {
         moveGameObject();
         rotationGameObject();
+        for (int i = 0; i < points.Count; i++)
+        {
+            points[i] = pointsGo[i].transform.position;
+        }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -26,7 +40,6 @@ public class MoveGameObject : MonoBehaviour
     {
         // khoảng cách giữa vị trí hiện tại và vị trí đích
         float distance = Vector3.Distance(transform.position, points[pointsIndex]);
-        Debug.Log("--------------------------  " + pointsIndex);
         
         if (distance < 0.1f)
         {
@@ -52,7 +65,7 @@ public class MoveGameObject : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotationToTarget, 3f * Time.deltaTime);
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         if (points != null && points.Count > 0)
