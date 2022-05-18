@@ -21,6 +21,10 @@ sysinfo.txt
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
+
+/.idea
+/Logs
+
 /.vs/
 ExportedObj/
 *.csproj
